@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="apachetool:war">
+    <output-path>$PROJECT_DIR$/apachetool/target</output-path>
+    <root id="archive" name="apachetool-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="apachetool:war exploded" />
+    </root>
+  </artifact>
+</component>
