@@ -28,4 +28,12 @@ public class Apple {
     public void setColor(String color) {
         this.color = color;
     }
+
+    @Override
+    public String toString() {
+        return "Apple{" +
+                "id='" + id + '\'' +
+                ", color='" + color + '\'' +
+                '}';
+    }
 }

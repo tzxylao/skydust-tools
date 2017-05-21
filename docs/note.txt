@@ -4,3 +4,6 @@ idea实用工具
 3、GsonFormat把json格式的内容转成Object的需求
 4、jrebel热部署插件，无需重启
 5、acejump快速定位文字位置，相当好用，推荐
+
+备忘录
+1、完整方法后.sout+tab->System.out.println()包裹该方法

@@ -1,15 +1,24 @@
 package com.skydust.bean;
 
-import com.skydust.annotation.S_table;
-
 /**
  * Created by laoliangliang on 17/5/20.
  */
-@S_table("person")
+//@S_table("person")
 public class Person {
     private String name;
 
     private Integer age;
+
+    private Hand hand;
+
+    public Hand getHand() {
+        return hand;
+    }
+
+    public Person setHand(Hand hand) {
+        this.hand = hand;
+        return this;
+    }
 
     public String getName() {
         return name;
@@ -34,6 +43,7 @@ public class Person {
         return "Person{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
+                ", hand=" + hand +
                 '}';
     }
 }
