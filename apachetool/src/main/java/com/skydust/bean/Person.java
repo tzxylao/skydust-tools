@@ -1,8 +1,11 @@
 package com.skydust.bean;
 
+import com.skydust.annotation.S_table;
+
 /**
  * Created by laoliangliang on 17/5/20.
  */
+@S_table("person")
 public class Person {
     private String name;
 
