@@ -19,7 +19,7 @@ public class collectionsTest {
         collPerson.add("123");
         collPerson.add("123");
         collPerson.add("1234");
-        //判断对象在集合中出现的次数
+        //1、判断对象在集合中出现的次数
         int cardinality = CollectionUtils.cardinality(str, collPerson);
         System.out.println(cardinality);
         System.out.println(p);
