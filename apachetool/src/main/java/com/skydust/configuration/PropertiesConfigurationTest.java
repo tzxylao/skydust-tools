@@ -9,7 +9,7 @@ import org.apache.commons.lang.SystemUtils;
  */
 public class PropertiesConfigurationTest {
     public static void main(String[] args) throws ConfigurationException {
-        //获取properties文件各属性值，设置key-value值
+        //1、获取properties文件各属性值，设置key-value值
         PropertiesConfiguration config = new PropertiesConfiguration(SystemUtils.USER_DIR+"\\apachetool\\src\\main\\resources\\log4j.properties");
         String basePath = config.getBasePath();
         System.out.println(basePath);
