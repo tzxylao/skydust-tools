@@ -30,6 +30,8 @@
           <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.5" />
           <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.9.3" />
           <element id="library" level="project" name="Maven: commons-collections:commons-collections:3.2.2" />
+          <element id="library" level="project" name="Maven: commons-configuration:commons-configuration:1.10" />
+          <element id="library" level="project" name="Maven: commons-lang:commons-lang:2.6" />
         </element>
       </element>
       <element id="directory" name="META-INF">
