@@ -11,31 +11,28 @@ public class Person {
 
     private Hand hand;
 
-    public Hand getHand() {
-        return hand;
-    }
-
-    public Person setHand(Hand hand) {
-        this.hand = hand;
-        return this;
-    }
-
     public String getName() {
         return name;
     }
 
-    public Person setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
 
     public Integer getAge() {
         return age;
     }
 
-    public Person setAge(Integer age) {
+    public void setAge(Integer age) {
         this.age = age;
-        return this;
+    }
+
+    public Hand getHand() {
+        return hand;
+    }
+
+    public void setHand(Hand hand) {
+        this.hand = hand;
     }
 
     @Override
