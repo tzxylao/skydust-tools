@@ -18,9 +18,23 @@ public class ListUtilTest {
         list.add("1");
         list.add("2");
         list.add("3");
+        List<Object> list2 = new ArrayList<>();
+        list2.add("1");
+        list2.add("2");
+        list2.add("4");
+        List list3 = ListUtils.removeAll(list, list2);
+        for (Object o : list3) {
+            System.out.println(o);
+        }
+        System.out.println("---------------------");
+        List list5 = ListUtils.retainAll(list, list2);
+        for (Object o : list5) {
+            System.out.println(o);
+        }
+        System.out.println("---------------------");
 //        list.add(4);
         //1、验证list对象符合某种规则，否则报错
-        List list2 = ListUtils.predicatedList(list, new Predicate() {
+        List list4 = ListUtils.predicatedList(list, new Predicate() {
             @Override
             public boolean evaluate(Object object) {
                 if (object instanceof String) {
@@ -29,7 +43,7 @@ public class ListUtilTest {
                 return false;
             }
         });
-        System.out.println(StringUtils.arrayToDelimitedString(list2.toArray(new String[]{}),","));
+        System.out.println(StringUtils.arrayToDelimitedString(list4.toArray(new String[]{}),","));
 
         List<Object> list1 = new ArrayList<>();
         list1.add("1");
