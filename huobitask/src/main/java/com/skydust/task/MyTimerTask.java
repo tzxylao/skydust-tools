@@ -16,4 +16,8 @@ public class MyTimerTask {
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TaskOne(), 0, 10000);
     }
+
+    public static void main(String[] args) {
+        log.info("xxxx\n\rassd");
+    }
 }

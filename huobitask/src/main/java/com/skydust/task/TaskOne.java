@@ -73,9 +73,10 @@ public class TaskOne extends TimerTask {
         int minute = truncate.get(Calendar.MINUTE);
         int second = truncate.get(Calendar.SECOND);
         //表示每10分钟
-        if (minute % 10 == 0 && second < 10) {
-            log.info("运行正常！ratio：" + ratio);
-        }
+//        if (minute % 10 == 0 && second < 10) {
+        log.info(String.format("运行正常！ratio:%s，\n\r账户数据:%s,\n\r实时数据%s",
+                ratio, accountInfo, JSON.toJSONString(ticker)));
+//        }
         //买
         if (ratio <= 0.25) {
             // 市价买入
