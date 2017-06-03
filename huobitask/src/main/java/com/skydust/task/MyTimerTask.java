@@ -15,15 +15,5 @@ public class MyTimerTask {
     public static void analyzeData() {
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TaskOne(), 0, 10000);
-
-        new Thread(() -> {
-            while (true) {
-                log.info("运行正常！！！");
-                try {
-                    Thread.sleep(600000);
-                } catch (Exception e) {
-                }
-            }
-        }).start();
     }
 }

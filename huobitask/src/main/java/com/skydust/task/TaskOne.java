@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.TimerTask;
 
 /**
@@ -68,6 +69,13 @@ public class TaskOne extends TimerTask {
         double diffMax = high - low;
         double diffLow = sell - low;
         double ratio = diffLow / diffMax;
+        Calendar truncate = Calendar.getInstance();
+        int minute = truncate.get(Calendar.MINUTE);
+        int second = truncate.get(Calendar.SECOND);
+        //表示每10分钟
+        if (minute % 10 == 0 && second <= 15) {
+            log.info("运行正常！ratio：" + ratio);
+        }
         //买
         if (ratio <= 0.25) {
             // 市价买入
