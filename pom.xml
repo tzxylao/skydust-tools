@@ -11,6 +11,7 @@
     <modules>
         <module>apachetool</module>
         <module>springdata</module>
+        <module>mybatis_tool</module>
     </modules>
 
 
