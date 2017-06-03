@@ -12,6 +12,7 @@
         <module>apachetool</module>
         <module>springdata</module>
         <module>mybatis_tool</module>
+        <module>huobitask</module>
     </modules>
 
 
