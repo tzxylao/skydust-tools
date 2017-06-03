@@ -73,7 +73,7 @@ public class TaskOne extends TimerTask {
         int minute = truncate.get(Calendar.MINUTE);
         int second = truncate.get(Calendar.SECOND);
         //表示每10分钟
-        if (minute % 10 == 0 && second <= 15) {
+        if (minute % 10 == 0 && second < 10) {
             log.info("运行正常！ratio：" + ratio);
         }
         //买
