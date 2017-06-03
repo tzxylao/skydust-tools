@@ -39,13 +39,6 @@
                             <mainClass>com.skydust.MainRun</mainClass>
                         </manifest>
                     </archive>
-                    <fileSets>
-                        <fileSet>
-                            <includes>
-                                <include>src/main/java/resources/**</include>
-                            </includes>
-                        </fileSet>
-                    </fileSets>
                 </configuration>
                 <executions>
                     <execution>

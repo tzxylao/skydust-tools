@@ -7,6 +7,7 @@ import com.skydust.bean.TickerLTC;
 import com.skydust.service.HuobiMain;
 import com.skydust.service.HuobiService;
 import com.skydust.util.UrlUtils;
+import com.skydust.util.propertyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,12 +74,14 @@ public class TaskOne extends TimerTask {
         int minute = truncate.get(Calendar.MINUTE);
         int second = truncate.get(Calendar.SECOND);
         //表示每10分钟
-//        if (minute % 10 == 0 && second < 10) {
+        if (minute % 10 == 0 && second < 10) {
         log.info(String.format("运行正常！ratio:%s，\n\r账户数据:%s,\n\r实时数据%s",
                 ratio, accountInfo, JSON.toJSONString(ticker)));
-//        }
+        }
+        String ratioLow = propertyUtil.getProp("ratio.low");
+        String ratioHigh = propertyUtil.getProp("ratio.high");
         //买
-        if (ratio <= 0.25) {
+        if (ratio <= Double.parseDouble(ratioLow)) {
             // 市价买入
             double amount = available_cny_display;
             String buyMarket = service.buyMarket(2, amount + "", null, null, HuobiMain.BUY_MARKET);
@@ -91,7 +94,7 @@ public class TaskOne extends TimerTask {
         }
 
         //卖
-        if (ratio >= 0.85) {
+        if (ratio >= Double.parseDouble(ratioHigh)) {
             // 市价卖出
             double sellCny = available_ltc_display * (1 - ratio);
             if (sellCny < 0.01) {
