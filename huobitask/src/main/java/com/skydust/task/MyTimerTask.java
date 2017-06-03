@@ -16,15 +16,12 @@ public class MyTimerTask {
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TaskOne(), 0, 10000);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    log.info("运行正常！！！");
-                    try {
-                        Thread.sleep(600000);
-                    } catch (Exception e) {
-                    }
+        new Thread(() -> {
+            while (true) {
+                log.info("运行正常！！！");
+                try {
+                    Thread.sleep(600000);
+                } catch (Exception e) {
                 }
             }
         }).start();

@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="apachetool" />
+        <module name="huobi-task" />
         <module name="huobitask" />
         <module name="mybatis_tool" />
         <module name="springdata" />
@@ -14,6 +15,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="apachetool" target="1.7" />
+      <module name="huobi-task" target="1.8" />
       <module name="huobitask" target="1.6" />
       <module name="mybatis_tool" target="1.5" />
       <module name="springdata" target="1.5" />
