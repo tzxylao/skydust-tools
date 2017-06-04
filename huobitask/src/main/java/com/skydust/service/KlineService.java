@@ -29,13 +29,13 @@ import java.util.List;
  * Created by laoliangliang on 17/6/3.
  */
 public class KlineService {
-    public static List<List<Object>> getKlineData() {
-        String klineStr = UrlUtils.loadJson("http://api.huobi.com/staticmarket/ltc_kline_005_json.js?length=3");
+    public static List<List<Object>> getKlineData(String length) {
+        String klineStr = UrlUtils.loadJson("http://api.huobi.com/staticmarket/ltc_kline_005_json.js?length=" + length);
         List<List<Object>> data = JSON.parseObject(klineStr, List.class);
         return data;
     }
 
     public static void main(String[] args) {
-        System.out.println(getKlineData());
+        System.out.println(getKlineData(2 + ""));
     }
 }

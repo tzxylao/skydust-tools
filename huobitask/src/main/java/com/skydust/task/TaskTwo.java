@@ -27,7 +27,7 @@ public class TaskTwo extends TaskOne {
         List<DealOrder> dealOrders = JSON.parseArray(newDealOrders, DealOrder.class);
         System.out.println(dealOrders);
 
-        List<List<Object>> klineData = KlineService.getKlineData();
+        List<List<Object>> klineData = KlineService.getKlineData(2 + "");
         TaskTwo two = new TaskTwo();
         two.prepared(service);
         System.out.println(two.accountInfo);
@@ -41,23 +41,37 @@ public class TaskTwo extends TaskOne {
     protected void handleTrade(HuobiService service) throws Exception {
         log.info(String.format("运行正常！"));
         prepared(service);
-        List<List<Object>> klineData = KlineService.getKlineData();
+        List<List<Object>> klineData = KlineService.getKlineData(3 + "");
         boolean downFlag_1 = judgeRatio(klineData, 0, BigDecimal.ZERO, 1, 1, "down", -0.002, 0.0012);
+        boolean upFlag_1 = judgeRatio(klineData, 0, BigDecimal.ZERO, 1, 1, "up", -0.002, 0.0012);
+
+        klineData = KlineService.getKlineData(4 + "");
         boolean downFlag_2 = judgeRatio(klineData, 0, BigDecimal.ZERO, 1, 2, "down", -0.002, 0.0005);
         boolean downFlag_3 = judgeRatio(klineData, 0, BigDecimal.ZERO, 2, 1, "down", -0.0012, 0.002);
 
 
-        boolean upFlag_1 = judgeRatio(klineData, 0, BigDecimal.ZERO, 1, 1, "up", -0.002, 0.0012);
         boolean upFlag_2 = judgeRatio(klineData, 0, BigDecimal.ZERO, 1, 2, "up", -0.002, 0.0005);
         boolean upFlag_3 = judgeRatio(klineData, 0, BigDecimal.ZERO, 2, 1, "up", -0.0012, 0.002);
 
 
         //实时行情数据
         TickerDetail ticker = tickerLTC.getTicker();
+        //这天最高价
+        Double high = ticker.getHigh();
+        //这天最低价
+        Double low = ticker.getLow();
         //最新价格
         Double last = ticker.getLast();
+        //开盘价
+        Double open = ticker.getOpen();
+        double diff = last - open;
+        double ratio = diff / open;
         //表示凹谷出现，买
         if (downFlag_1 || downFlag_2 || downFlag_3) {
+            if (ratio > -0.02) {
+                log.info("跌涨比：" + ratio + "，可涨幅度太小");
+                return;
+            }
             //可用人民币
             Double available_cny_display = accountInfo.getAvailable_cny_display();
             if (available_cny_display < 1) {
@@ -76,6 +90,10 @@ public class TaskTwo extends TaskOne {
         }
         //表示凸峰出现，卖
         if (upFlag_1 || upFlag_2 || upFlag_3) {
+            if (ratio < -0.06) {
+                log.info("跌涨比：" + ratio + "，还有涨幅空间");
+                return;
+            }
             //可用ltc
             Double available_ltc_display = accountInfo.getAvailable_ltc_display();
             if (available_ltc_display == 0) {
