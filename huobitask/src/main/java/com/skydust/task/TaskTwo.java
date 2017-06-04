@@ -68,7 +68,7 @@ public class TaskTwo extends TaskOne {
         double ratio = diff / open;
         //表示凹谷出现，买
         if (downFlag_1 || downFlag_2 || downFlag_3) {
-            if (ratio > -0.02) {
+            if (ratio > -0.03) {
                 log.info("跌涨比：" + ratio + "，可涨幅度太小");
                 return;
             }
