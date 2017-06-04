@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class KlineService {
     public static List<List<Object>> getKlineData() {
-        String klineStr = UrlUtils.loadJson("http://api.huobi.com/staticmarket/ltc_kline_005_json.js");
+        String klineStr = UrlUtils.loadJson("http://api.huobi.com/staticmarket/ltc_kline_005_json.js?length=3");
         List<List<Object>> data = JSON.parseObject(klineStr, List.class);
         return data;
     }

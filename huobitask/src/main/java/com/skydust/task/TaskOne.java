@@ -19,6 +19,8 @@ import java.util.TimerTask;
  * Created by laoliangliang on 17/6/3.
  */
 public class TaskOne extends TimerTask {
+    protected AccountInfo accountInfo;
+    protected TickerLTC tickerLTC;
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
     public static void main(String[] args) throws Exception {
@@ -26,7 +28,6 @@ public class TaskOne extends TimerTask {
         String account = service.getAccountInfo(HuobiMain.ACCOUNT_INFO);
         System.out.println(account);
     }
-
     @Override
     public void run() {
         HuobiService service = new HuobiService();
@@ -41,11 +42,17 @@ public class TaskOne extends TimerTask {
         }
     }
 
-    private void handleTrade(HuobiService service) throws Exception {
-//        log.info("-----账户数据-----");
+    public void prepared(HuobiService service) throws Exception {
         String account = service.getAccountInfo(HuobiMain.ACCOUNT_INFO);
 //        log.info(account);
-        AccountInfo accountInfo = JSON.parseObject(account, AccountInfo.class);
+        accountInfo = JSON.parseObject(account, AccountInfo.class);
+        String tickerLtc = UrlUtils.loadJson("http://api.huobi.com/staticmarket/ticker_ltc_json.js");
+        tickerLTC = JSON.parseObject(tickerLtc, TickerLTC.class);
+    }
+
+    protected void handleTrade(HuobiService service) throws Exception {
+        prepared(service);
+//        log.info("-----账户数据-----");
         //可用人民币
         Double available_cny_display = accountInfo.getAvailable_cny_display();
         //可用ltc
@@ -53,8 +60,7 @@ public class TaskOne extends TimerTask {
 
         //实时行情数据
 //        log.info("-----实时行情数据-----");
-        String tickerLtc = UrlUtils.loadJson("http://api.huobi.com/staticmarket/ticker_ltc_json.js");
-        TickerLTC tickerLTC = JSON.parseObject(tickerLtc, TickerLTC.class);
+
 //        log.info(tickerLtc);
         TickerDetail ticker = tickerLTC.getTicker();
         //这天最高价
@@ -81,20 +87,21 @@ public class TaskOne extends TimerTask {
         String ratioLow = propertyUtil.getProp("ratio.low");
         String ratioHigh = propertyUtil.getProp("ratio.high");
         //买
-        if (ratio <= Double.parseDouble(ratioLow)) {
+        /*if (ratio <= Double.parseDouble(ratioLow)) {
             // 市价买入
             double amount = available_cny_display;
-            String buyMarket = service.buyMarket(2, amount + "", null, null, HuobiMain.BUY_MARKET);
+            String buyMarket = service.buyMarket(2, `amount + "", null, null, HuobiMain.BUY_MARKET);
             log.info("-----账户数据-----");
             log.info(account);
             log.info("-----实时行情数据-----");
             log.info(tickerLtc);
             log.info("-----买入结果-----");
             log.info("buy:" + buyMarket);
-        }
+        }*/
 
         //卖
-        if (ratio >= Double.parseDouble(ratioHigh)) {
+        if (sell > 198) {
+//        if (ratio >= Double.parseDouble(ratioHigh)) {
             // 市价卖出
             double sellCny = available_ltc_display * (1 - ratio);
             if (sellCny < 0.01) {
@@ -107,9 +114,7 @@ public class TaskOne extends TimerTask {
             // 市价卖出
             String sellVal = service.sellMarket(2, amount + "", null, null, HuobiMain.SELL_MARKET);
             log.info("-----账户数据-----");
-            log.info(account);
             log.info("-----实时行情数据-----");
-            log.info(tickerLtc);
             log.info("-----卖出结果-----");
             log.info("sell:" + sellVal);
         }
