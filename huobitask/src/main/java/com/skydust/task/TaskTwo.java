@@ -21,6 +21,7 @@ public class TaskTwo extends TaskOne {
     //最新10条订单
     protected List<DealOrder> dealOrders;
     private Logger log = LoggerFactory.getLogger(this.getClass());
+    private int minute_bak;
 
     public static void main(String[] args) throws Exception {
         HuobiService service = new HuobiService();
@@ -42,9 +43,11 @@ public class TaskTwo extends TaskOne {
     protected void handleTrade(HuobiService service) throws Exception {
         Calendar c = Calendar.getInstance();
         int minute = c.get(Calendar.MINUTE);
-        int second = c.get(Calendar.SECOND);
-        if (minute % 5 == 0 && second == 0) {
-            log.info(String.format("运行正常！"));
+        if (minute % 1 == 0) {
+            if (minute != minute_bak) {
+                minute_bak = minute;
+                log.info(String.format("运行正常！"));
+            }
         }
         prepared(service);
         List<List<Object>> klineData = KlineService.getKlineData(3 + "");
@@ -91,6 +94,8 @@ public class TaskTwo extends TaskOne {
 
             if (available_cny_display < 1) {
                 log.info("资金不足，还剩：" + available_cny_display + "，不能买入");
+                log.info("跌涨比：" + ratio);
+                log.info("kline:" + JSON.toJSONString(klineData));
                 return;
             }
             Double sellPrice = Double.parseDouble(SetSystemProperty.getKeyValue("sell_price"));
@@ -111,6 +116,8 @@ public class TaskTwo extends TaskOne {
 
             if (available_ltc_display == 0) {
                 log.info("持有ltc已为0，无ltc可卖");
+                log.info("跌涨比：" + ratio);
+                log.info("kline:" + JSON.toJSONString(klineData));
                 return;
             }
             //记录的上次买价，总金额
