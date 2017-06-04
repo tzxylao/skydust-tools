@@ -83,14 +83,14 @@ public class TaskTwo extends TaskOne {
         }
         //表示凹谷出现，买
         if (downFlag_1 || downFlag_2 || downFlag_3) {
-            if (ratio > -0.03) {
+            if (ratio > -0.025) {
                 log.info("跌涨比：" + ratio + "，可涨幅度太小，不买");
                 log.info("kline:" + JSON.toJSONString(klineData));
                 return;
             }
 
             if (available_cny_display < 1) {
-                log.info("资金不足，还剩：" + available_cny_display);
+                log.info("资金不足，还剩：" + available_cny_display + "，不能买入");
                 return;
             }
             Double sellPrice = Double.parseDouble(SetSystemProperty.getKeyValue("sell_price"));
@@ -110,7 +110,7 @@ public class TaskTwo extends TaskOne {
             }
 
             if (available_ltc_display == 0) {
-                log.info("持有ltc已为0");
+                log.info("持有ltc已为0，无ltc可卖");
                 return;
             }
             //记录的上次买价，总金额
