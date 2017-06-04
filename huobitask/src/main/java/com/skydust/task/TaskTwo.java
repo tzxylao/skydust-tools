@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -39,7 +40,12 @@ public class TaskTwo extends TaskOne {
      */
     @Override
     protected void handleTrade(HuobiService service) throws Exception {
-        log.info(String.format("运行正常！"));
+        Calendar c = Calendar.getInstance();
+        int minute = c.get(Calendar.MINUTE);
+        int second = c.get(Calendar.SECOND);
+        if (minute % 5 == 0 && second == 0) {
+            log.info(String.format("运行正常！"));
+        }
         prepared(service);
         List<List<Object>> klineData = KlineService.getKlineData(3 + "");
         boolean downFlag_1 = judgeRatio(klineData, 0, BigDecimal.ZERO, 1, 1, "down", -0.002, 0.0012);
@@ -56,6 +62,12 @@ public class TaskTwo extends TaskOne {
 
         //实时行情数据
         TickerDetail ticker = tickerLTC.getTicker();
+
+        //可用人民币
+        Double available_cny_display = accountInfo.getAvailable_cny_display();
+        //可用ltc
+        Double available_ltc_display = accountInfo.getAvailable_ltc_display();
+
         //这天最高价
         Double high = ticker.getHigh();
         //这天最低价
@@ -66,36 +78,37 @@ public class TaskTwo extends TaskOne {
         Double open = ticker.getOpen();
         double diff = last - open;
         double ratio = diff / open;
+        if (ratio < -0.1) {
+            buyByMarket(service, ticker, available_cny_display);
+        }
         //表示凹谷出现，买
         if (downFlag_1 || downFlag_2 || downFlag_3) {
             if (ratio > -0.03) {
-                log.info("跌涨比：" + ratio + "，可涨幅度太小");
+                log.info("跌涨比：" + ratio + "，可涨幅度太小，不买");
+                log.info("kline:" + JSON.toJSONString(klineData));
                 return;
             }
-            //可用人民币
-            Double available_cny_display = accountInfo.getAvailable_cny_display();
+
             if (available_cny_display < 1) {
                 log.info("资金不足，还剩：" + available_cny_display);
                 return;
             }
             Double sellPrice = Double.parseDouble(SetSystemProperty.getKeyValue("sell_price"));
             if (sellPrice != 0 && last < sellPrice) {
-                // 市价买入
-                String buyMarket = service.buyMarket(2, available_cny_display + "", null, null, HuobiMain.BUY_MARKET);
-                //记录上次买价
-                SetSystemProperty.writeProperties("buy_price", available_cny_display + "");
-                log.info("市价买入：" + buyMarket);
-                log.info("行情数据：" + JSON.toJSONString(ticker));
+                buyByMarket(service, ticker, available_cny_display);
             }
+        }
+        if (ratio > 0.1) {
+            sellByMarket(service, ticker, last, available_ltc_display);
         }
         //表示凸峰出现，卖
         if (upFlag_1 || upFlag_2 || upFlag_3) {
             if (ratio < -0.06) {
-                log.info("跌涨比：" + ratio + "，还有涨幅空间");
+                log.info("跌涨比：" + ratio + "，还有涨幅空间，不卖");
+                log.info("kline:" + JSON.toJSONString(klineData));
                 return;
             }
-            //可用ltc
-            Double available_ltc_display = accountInfo.getAvailable_ltc_display();
+
             if (available_ltc_display == 0) {
                 log.info("持有ltc已为0");
                 return;
@@ -103,15 +116,28 @@ public class TaskTwo extends TaskOne {
             //记录的上次买价，总金额
             String price = SetSystemProperty.getKeyValue("buy_price");
             if (last * available_ltc_display * 0.995 > Double.parseDouble(price)) {
-                // 市价卖出
-                String sellRet = service.sellMarket(2, available_ltc_display + "", null, null, HuobiMain.SELL_MARKET);
-                //记录卖价单价
-                SetSystemProperty.writeProperties("sell_price", last + "");
-                log.info("市价卖出：" + sellRet);
-                log.info("行情数据：" + JSON.toJSONString(ticker));
+                sellByMarket(service, ticker, last, available_ltc_display);
             }
         }
 
+    }
+
+    private void sellByMarket(HuobiService service, TickerDetail ticker, Double last, Double available_ltc_display) throws Exception {
+        // 市价卖出
+        String sellRet = service.sellMarket(2, available_ltc_display + "", null, null, HuobiMain.SELL_MARKET);
+        //记录卖价单价
+        SetSystemProperty.writeProperties("sell_price", last + "");
+        log.info("市价卖出：" + sellRet);
+        log.info("行情数据：" + JSON.toJSONString(ticker));
+    }
+
+    private void buyByMarket(HuobiService service, TickerDetail ticker, Double available_cny_display) throws Exception {
+        // 市价买入
+        String buyMarket = service.buyMarket(2, available_cny_display + "", null, null, HuobiMain.BUY_MARKET);
+        //记录上次买价
+        SetSystemProperty.writeProperties("buy_price", available_cny_display + "");
+        log.info("市价买入：" + buyMarket);
+        log.info("行情数据：" + JSON.toJSONString(ticker));
     }
 
     /**

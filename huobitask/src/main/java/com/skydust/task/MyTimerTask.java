@@ -18,7 +18,7 @@ public class MyTimerTask {
         SetSystemProperty.writeProperties("buy_price", "0.0");
         SetSystemProperty.writeProperties("sell_price", "0.0");
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TaskTwo(), 0, 300001);
+        timer.scheduleAtFixedRate(new TaskTwo(), 0, 10000);
     }
 
     public static void main(String[] args) {
