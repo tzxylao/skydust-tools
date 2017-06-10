@@ -51,20 +51,20 @@ public class TaskTwo extends TaskOne {
         }
         prepared(service);
         List<List<Object>> klineData = KlineService.getKlineData(3 + "");
-        boolean downFlag_1 = judgeRatio(klineData, 0, BigDecimal.ZERO, 1, 1, "down", -0.002, 0.001);
-        boolean upFlag_1 = judgeRatio(klineData, 0, BigDecimal.ZERO, 1, 1, "up", -0.002, 0.001);
+        boolean downFlag_1 = judgeRatio(klineData, 0, BigDecimal.ZERO, 1, 1, "down", 0.0, 0.0);
+        boolean upFlag_1 = judgeRatio(klineData, 0, BigDecimal.ZERO, 1, 1, "up", 0.0, 0.0);
 
-        klineData = KlineService.getKlineData(4 + "");
-        boolean downFlag_2 = judgeRatio(klineData, 0, BigDecimal.ZERO, 1, 2, "down", -0.002, 0.0005);
-        boolean downFlag_3 = judgeRatio(klineData, 0, BigDecimal.ZERO, 2, 1, "down", -0.001, 0.002);
-
-
-        boolean upFlag_2 = judgeRatio(klineData, 0, BigDecimal.ZERO, 1, 2, "up", -0.002, 0.0005);
-        boolean upFlag_3 = judgeRatio(klineData, 0, BigDecimal.ZERO, 2, 1, "up", -0.001, 0.002);
-
-        klineData = KlineService.getKlineData(5 + "");
-        boolean downFlag_4 = judgeRatio(klineData, 0, BigDecimal.ZERO, 2, 2, "down", -0.001, 0.001);
-        boolean upFlag_4 = judgeRatio(klineData, 0, BigDecimal.ZERO, 2, 2, "up", -0.001, 0.001);
+//        klineData = KlineService.getKlineData(4 + "");
+//        boolean downFlag_2 = judgeRatio(klineData, 0, BigDecimal.ZERO, 1, 2, "down", -0.002, 0.0005);
+//        boolean downFlag_3 = judgeRatio(klineData, 0, BigDecimal.ZERO, 2, 1, "down", -0.001, 0.002);
+//
+//
+//        boolean upFlag_2 = judgeRatio(klineData, 0, BigDecimal.ZERO, 1, 2, "up", -0.002, 0.0005);
+//        boolean upFlag_3 = judgeRatio(klineData, 0, BigDecimal.ZERO, 2, 1, "up", -0.001, 0.002);
+//
+//        klineData = KlineService.getKlineData(5 + "");
+//        boolean downFlag_4 = judgeRatio(klineData, 0, BigDecimal.ZERO, 2, 2, "down", -0.001, 0.001);
+//        boolean upFlag_4 = judgeRatio(klineData, 0, BigDecimal.ZERO, 2, 2, "up", -0.001, 0.001);
 
         //实时行情数据
         TickerDetail ticker = tickerLTC.getTicker();
@@ -84,16 +84,13 @@ public class TaskTwo extends TaskOne {
         Double open = ticker.getOpen();
         double diff = last - open;
         double ratio = diff / open;
-        if (ratio < -0.1) {
-            buyByMarket(service, ticker, available_cny_display);
-        }
         //表示凹谷出现，买
-        if (downFlag_1 || downFlag_2 || downFlag_3 || downFlag_4) {
-            if (ratio > -0.025) {
-                log.info("跌涨比：" + ratio + "，可涨幅度太小，不买");
-                log.info("kline:" + JSON.toJSONString(klineData));
-                return;
-            }
+        if (downFlag_1) {
+//            if (ratio > -0.025) {
+//                log.info("跌涨比：" + ratio + "，可涨幅度太小，不买");
+//                log.info("kline:" + JSON.toJSONString(klineData));
+//                return;
+//            }
 
             if (available_cny_display < 1) {
                 log.info("资金不足，还剩：" + available_cny_display + "，不能买入");
@@ -110,12 +107,12 @@ public class TaskTwo extends TaskOne {
             sellByMarket(service, ticker, last, available_ltc_display);
         }
         //表示凸峰出现，卖
-        if (upFlag_1 || upFlag_2 || upFlag_3 || upFlag_4) {
-            if (ratio < -0.06) {
-                log.info("跌涨比：" + ratio + "，还有涨幅空间，不卖");
-                log.info("kline:" + JSON.toJSONString(klineData));
-                return;
-            }
+        if (upFlag_1) {
+//            if (ratio < -0.06) {
+//                log.info("跌涨比：" + ratio + "，还有涨幅空间，不卖");
+//                log.info("kline:" + JSON.toJSONString(klineData));
+//                return;
+//            }
 
             if (available_ltc_display == 0) {
                 log.info("持有ltc已为0，无ltc可卖");

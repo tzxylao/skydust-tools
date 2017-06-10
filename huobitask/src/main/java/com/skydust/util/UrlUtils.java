@@ -36,4 +36,9 @@ public class UrlUtils {
         }
         return json.toString();
     }
+
+    public static void main(String[] args) {
+        System.out.println(UrlUtils.class.getClassLoader().getResource(".").getPath());
+        System.out.println(UrlUtils.class.getClassLoader().getResource("config.properties").getPath());
+    }
 }

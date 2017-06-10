@@ -45,9 +45,14 @@ public class TaskOne extends TimerTask {
     public void prepared(HuobiService service) throws Exception {
         String account = service.getAccountInfo(HuobiMain.ACCOUNT_INFO);
 //        log.info(account);
-        accountInfo = JSON.parseObject(account, AccountInfo.class);
-        String tickerLtc = UrlUtils.loadJson("http://api.huobi.com/staticmarket/ticker_ltc_json.js");
-        tickerLTC = JSON.parseObject(tickerLtc, TickerLTC.class);
+        try {
+            accountInfo = JSON.parseObject(account, AccountInfo.class);
+            String tickerLtc = UrlUtils.loadJson("http://api.huobi.com/staticmarket/ticker_ltc_json.js");
+            tickerLTC = JSON.parseObject(tickerLtc, TickerLTC.class);
+        } catch (Exception e) {
+            log.error("解析json字符串异常" + e.getMessage());
+            prepared(service);
+        }
     }
 
     protected void handleTrade(HuobiService service) throws Exception {

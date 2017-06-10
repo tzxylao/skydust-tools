@@ -8,7 +8,8 @@ import java.util.Properties;
  */
 public class SetSystemProperty {
     //属性文件的路径
-    static String profilepath = System.getProperty("user.dir") + "/huobitask/src/main/resources/config.properties";
+//    static String profilepath = System.getProperty("user.dir") + "/huobitask/src/main/resources/config.properties";
+    static String profilepath = SetSystemProperty.class.getClassLoader().getResource("config.properties").getPath();
     /**
      * 采用静态方法
      */
