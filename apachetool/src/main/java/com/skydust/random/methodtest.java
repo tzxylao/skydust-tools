@@ -39,6 +39,7 @@ public class methodtest {
 
         String bar = new String("123");
         changeString(bar);
+        System.out.println(bar);
     }
 
     private static void changeString(String bar) {

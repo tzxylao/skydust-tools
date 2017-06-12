@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/apachetool/apachetool.iml" filepath="$PROJECT_DIR$/apachetool/apachetool.iml" />
-      <module fileurl="file://$PROJECT_DIR$/huobitask/huobi-task.iml" filepath="$PROJECT_DIR$/huobitask/huobi-task.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mybatis_tool/mybatis_tool.iml" filepath="$PROJECT_DIR$/mybatis_tool/mybatis_tool.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../mybatis-generator-gui/huobi-task.iml" filepath="$PROJECT_DIR$/../mybatis-generator-gui/huobi-task.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../mybatis-generator-gui/mybatis_tool.iml" filepath="$PROJECT_DIR$/../mybatis-generator-gui/mybatis_tool.iml" />
       <module fileurl="file://$PROJECT_DIR$/springdata/springdata.iml" filepath="$PROJECT_DIR$/springdata/springdata.iml" />
       <module fileurl="file://$PROJECT_DIR$/tools.iml" filepath="$PROJECT_DIR$/tools.iml" />
     </modules>

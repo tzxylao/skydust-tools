@@ -5,6 +5,7 @@ idea实用工具
 4、jrebel热部署插件，无需重启
 5、acejump快速定位文字位置，相当好用，推荐
 6、grep console打印台不同级别打印给予不同颜色背景区分，方便查找
+7、String Manipulation 快速转变字符串，比如转成驼峰命名法
 
 备忘录
 1、完整方法后.sout+tab->System.out.println()包裹该方法
