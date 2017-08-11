@@ -13,6 +13,7 @@
         <module>springdata</module>
         <module>mybatis_tool</module>
         <module>huobitask</module>
+        <module>spring_quartz</module>
     </modules>
 
 

@@ -18,12 +18,12 @@ import java.util.List;
  * 在target/classes下创建文件，会去target/classes/com/skydust下寻找同名文件并替换
  * Created by laoliangliang on 2017/6/13.
  */
-public class FileTest {
+public class FileMonitorTest {
     public static void main(String[] args) throws IOException {
         File tempDirectory = FileUtils.getTempDirectory();
         System.out.println(FileUtils.getUserDirectoryPath());
         System.out.println(tempDirectory.getAbsolutePath());
-        final String path = FileTest.class.getClass().getResource("/").getPath();
+        final String path = FileMonitorTest.class.getClass().getResource("/").getPath();
         System.out.println(path);
         final File parentFile = FileUtils.getFile(path);
         final File aimFile = FileUtils.getFile(path+"/com/skydust/");

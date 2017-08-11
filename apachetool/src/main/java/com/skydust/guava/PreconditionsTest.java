@@ -3,6 +3,8 @@ package com.skydust.guava;
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Ordering;
 
+import java.util.Objects;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.Objects.requireNonNull;
 
@@ -26,13 +28,28 @@ public class PreconditionsTest {
         //2、比较两对象是否相同
         PreconditionsTest t1 = new PreconditionsTest();
         t1.a = 1;
-        t1.b = "4";
+        t1.b = "2";
         t1.c = "3";
         PreconditionsTest t2 = new PreconditionsTest();
         t2.a = 1;
         t2.b = "2";
-        t2.c = "8";
+        t2.c = "3";
         System.out.println(t1.compareTo(t2));
+        //3、比较两对象，不需要考虑null值问题
+        /*
+        Objects.equal("a", "a"); // returns true
+        Objects.equal(null, "a"); // returns false
+        Objects.equal("a", null); // returns false
+        Objects.equal(null, null); // returns true
+         */
+        System.out.println(Objects.equals(t1, t2));
+
+        Ordering<Integer> ord = new Ordering<Integer>() {
+            @Override
+            public int compare(Integer left, Integer right) {
+                return left-right;
+            }
+        };
     }
 
     public int compareTo(PreconditionsTest that) {

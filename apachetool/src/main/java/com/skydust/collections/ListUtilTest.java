@@ -62,6 +62,7 @@ public class ListUtilTest {
                 return false;
             }
         });
-        System.out.println(StringUtils.arrayToDelimitedString(select.toArray(new String[]{}),","));
+        System.out.println(list1.toArray(new String[]{}));
+        System.out.println(StringUtils.arrayToDelimitedString(list1.toArray(new String[]{}),","));
     }
 }
