@@ -1,8 +1,11 @@
 package com.skydust.collections;
 
+import com.google.common.collect.Iterators;
+import com.google.common.collect.UnmodifiableIterator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.ListUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.ArrayUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -64,5 +67,16 @@ public class ListUtilTest {
         });
         System.out.println(list1.toArray(new String[]{}));
         System.out.println(StringUtils.arrayToDelimitedString(list1.toArray(new String[]{}),","));
+        System.out.println(ArrayUtils.toString(list1.toArray()));
+        //4、分割集合n个为一组
+        UnmodifiableIterator<List<Object>> partition = Iterators.partition(list1.iterator(), 2);
+        List<Object> next = partition.next();
+        List<Object> next1 = partition.next();
+        System.out.println(next1.get(0));
+
+        //5、集合中出现频次
+        int frequency = Iterators.frequency(list1.iterator(), "3");
+        System.out.println(frequency);
+
     }
 }
