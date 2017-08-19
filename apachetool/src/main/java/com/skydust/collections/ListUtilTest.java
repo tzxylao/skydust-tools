@@ -1,5 +1,6 @@
 package com.skydust.collections;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.UnmodifiableIterator;
 import org.apache.commons.collections.CollectionUtils;
@@ -77,6 +78,7 @@ public class ListUtilTest {
         //5、集合中出现频次
         int frequency = Iterators.frequency(list1.iterator(), "3");
         System.out.println(frequency);
-
+        String str = null;
+        Preconditions.checkNotNull(str,"null Point");
     }
 }
